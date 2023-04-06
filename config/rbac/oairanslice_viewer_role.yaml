@@ -1,0 +1,20 @@
+# permissions for end users to view oairanslice.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: oairanslice-viewer-role
+rules:
+- apiGroups:
+  - ranslice.winlab.nycu
+  resources:
+  - oairanslice
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ranslice.winlab.nycu
+  resources:
+  - oairanslice/status
+  verbs:
+  - get

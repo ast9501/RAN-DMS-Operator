@@ -1,0 +1,24 @@
+# permissions for end users to edit oairanslice.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: oairanslice-editor-role
+rules:
+- apiGroups:
+  - ranslice.winlab.nycu
+  resources:
+  - oairanslice
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ranslice.winlab.nycu
+  resources:
+  - oairanslice/status
+  verbs:
+  - get

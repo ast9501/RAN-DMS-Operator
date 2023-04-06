@@ -1,0 +1,16 @@
+apiVersion: ranslice.winlab.nycu/v1alpha1
+kind: OAIRanSlice
+metadata:
+  name: oairanslice-1
+spec:
+  # TODO(user): Add fields here
+  snssaiList:
+    - sst: 1
+      sd: "0x010203"
+    - sst: 1
+      sd: "0x112233"
+  # TODO: Add private chart repo access token
+  packageUrl: https://harbor.winfra.cs.nycu.edu.tw/chartrepo/openairinterface
+  cuPackageVersion: 0.2.0
+  duPackageVersion: 0.2.0
+  amfAddr: 192.168.3.2

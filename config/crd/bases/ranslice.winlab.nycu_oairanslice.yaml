@@ -1,0 +1,106 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: oairanslice.ranslice.winlab.nycu
+spec:
+  group: ranslice.winlab.nycu
+  names:
+    kind: OAIRanSlice
+    listKind: OAIRanSliceList
+    plural: oairanslice
+    singular: oairanslice
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: OAIRanSlice is the Schema for the oairanslice API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: OAIRanSliceSpec defines the desired state of OAIRanSlice
+            properties:
+              amfAddr:
+                description: AMF addr
+                type: string
+              cuPackageVersion:
+                description: specify OAI helm chart version
+                type: string
+              duPackageVersion:
+                type: string
+              packageUrl:
+                description: specify OAI helm chart repo
+                type: string
+              snssaiList:
+                description: support snssai list
+                items:
+                  description: S-NSSAI
+                  properties:
+                    sd:
+                      type: string
+                    sst:
+                      format: int32
+                      type: integer
+                  required:
+                  - sd
+                  - sst
+                  type: object
+                type: array
+            required:
+            - amfAddr
+            - cuPackageVersion
+            - duPackageVersion
+            - packageUrl
+            - snssaiList
+            type: object
+          status:
+            description: OAIRanSliceStatus defines the observed state of OAIRanSlice
+            properties:
+              cucpAddr:
+                description: CUCP addr (secondary-interface)
+                type: string
+              cuupAddr:
+                description: CUUP addr (secondary-interface)
+                type: string
+              duAddr:
+                description: DU addr (secondary-interface)
+                type: string
+              nguAddr:
+                description: CUUP-ngu interface addr (secondary-interface)
+                type: string
+              state:
+                description: State of oai ran slice
+                type: string
+            required:
+            - cucpAddr
+            - cuupAddr
+            - duAddr
+            - nguAddr
+            - state
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
