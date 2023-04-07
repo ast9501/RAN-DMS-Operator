@@ -1,5 +1,5 @@
 # Adds namespace to all resources.
-namespace: ran-dms-operator-system
+namespace: o-ran #ran-dms-operator-system
 
 # Value of this field is prepended to the
 # names of all resources, e.g. a deployment named
