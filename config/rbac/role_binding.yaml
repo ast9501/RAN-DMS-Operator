@@ -10,3 +10,16 @@ subjects:
 - kind: ServiceAccount
   name: controller-manager
   namespace: system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: manager-helm-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: controller-manager
+  namespace: system
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io

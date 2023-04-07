@@ -58,7 +58,7 @@ var ipPoolNetworkID24 string = "192.168.3."
 var controlIpPoolHostID int = 150
 var nguIpPoolHostID int = 50
 var oaiHelmCommonPackageName string = "win-oai"
-var oaiCuPackageName string = "cu-cp"
+var oaiCuPackageName string = "cu-up"
 var oaiSliceMap map[string]int = make(map[string]int)
 
 //var oaiDuPackageName string = "du"
@@ -137,7 +137,19 @@ func (r *OAIRanSliceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		return reconcile.Result{}, err
 	}
 
-	// TODO: update helm repo
+	err = helm.RepoAdd(oaiHelmCommonPackageName, instance.Spec.PackageUrl)
+	if err != nil {
+		logger.Error(err, "Failed to add helm repo")
+	} else {
+		logger.Info("Add Helm repo success")
+	}
+
+	err = helm.RepoUpdate()
+	if err != nil {
+		logger.Error(err, "Failed to update repo")
+	} else {
+		logger.Info("Update Helm repo success")
+	}
 
 	// TODO: Check if common NF already exist (for example, RT-RIC)
 	// TODO: Check if CU, as RAN common NF, already exist (if not exist, create new)
@@ -159,14 +171,16 @@ func (r *OAIRanSliceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 
 	// assign cu ip addrs
 	cucpAddr := newControlIp()
-	vals += ",cp.addr=" + cucpAddr
+	vals += ",global.cp.addr=" + cucpAddr
 	logger.Info("set cp addr:", "ip", cucpAddr)
 	cuupAddr := newControlIp()
-	vals += ",up.addr=" + cuupAddr
+	vals += ",global.up.addr=" + cuupAddr
 	logger.Info("set up addr:", "ip", cuupAddr)
 	nguAddr := newNguIp()
-	vals += ",ngu.addr=" + nguAddr
+	vals += ",global.ngu.addr=" + nguAddr
 	logger.Info("set ngu addr:", "ip", nguAddr)
+	// add amf addr info
+	vals += ",global.amf.addr=" + instance.Spec.AMFAddr
 
 	args := wrapHelmVal(vals)
 	logger.Info("final args: ", "args", args["set"])

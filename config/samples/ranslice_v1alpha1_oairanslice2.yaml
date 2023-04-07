@@ -1,7 +1,7 @@
 apiVersion: ranslice.winlab.nycu/v1alpha1
 kind: OAIRanSlice
 metadata:
-  name: oairanslice-1
+  name: oairanslice-2
 spec:
   # TODO(user): Add fields here
   snssaiList:
